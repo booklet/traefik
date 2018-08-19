@@ -1,11 +1,11 @@
-Start
+Start proxy
 ```
-docker-compose up -d reverse-proxy
+$ docker-compose up -d reverse-proxy
 ```
 
 Requires add network:
 ```
-docker network create traefik_proxy
+$ docker network create traefik_proxy
 ```
 
 In containers `docker-compose.yml` add:
