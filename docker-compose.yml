@@ -1,24 +1,26 @@
 # Nedd to create a network
 # $ docker network create traefik_proxy
 
-version: '3'
+version: '3.3'
 
 services:
   reverse-proxy:
-    image: traefik # The official Traefik docker image
-    command: --api --docker # Enables the web UI and tells Træfik to listen to docker
+    image: "traefik:v2.0.2" # The official Traefik docker image
+    command:
+      - "--api.insecure=true" # Don't do that in production
+      - "--log.level=DEBUG"
+      - "--providers.docker" # Enables the web UI and tells Traefik to listen to docker
+      - "--providers.docker.exposedbydefault=false"
+      # - "--entrypoints.web.address=:80"
     networks:
-      - default
       - traefik_proxy
     ports:
       - "80:80"     # The HTTP port
       - "8080:8080" # The Web UI (enabled by --api)
     volumes:
-      - /var/run/docker.sock:/var/run/docker.sock # So that Traefik can listen to the Docker events
+      - "/var/run/docker.sock:/var/run/docker.sock:ro" # So that Traefik can listen to the Docker events
 
 networks:
   traefik_proxy:
     external:
       name: traefik_proxy
-  default:
-    driver: bridge
