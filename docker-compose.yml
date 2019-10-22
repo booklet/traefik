@@ -8,7 +8,7 @@ services:
     image: "traefik:v2.0.2" # The official Traefik docker image
     command:
       - "--api.insecure=true" # Don't do that in production
-      - "--log.level=DEBUG"
+      # - "--log.level=DEBUG"
       - "--providers.docker" # Enables the web UI and tells Traefik to listen to docker
       - "--providers.docker.exposedbydefault=false"
       # - "--entrypoints.web.address=:80"
