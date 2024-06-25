@@ -1,17 +1,12 @@
-# Nedd to create a network
+# Requires to create a network
 # $ docker network create traefik_proxy
-
-version: '3.3'
 
 services:
   reverse-proxy:
-    image: "traefik:v2.0.2" # The official Traefik docker image
+    image: "traefik:v3.0.3" # The official Traefik docker image
     command:
       - "--api.insecure=true" # Don't do that in production
-      # - "--log.level=DEBUG"
       - "--providers.docker" # Enables the web UI and tells Traefik to listen to docker
-      - "--providers.docker.exposedbydefault=false"
-      # - "--entrypoints.web.address=:80"
     networks:
       - traefik_proxy
     ports:
@@ -22,5 +17,5 @@ services:
 
 networks:
   traefik_proxy:
-    external:
-      name: traefik_proxy
+    external: true
+    name: traefik_proxy
